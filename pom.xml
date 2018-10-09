@@ -14,6 +14,7 @@
 	<modules>
 		<module>goldeasy-user-interface</module>
 		<module>goldeasy-user-service</module>
+		<module>goldeasy-user-entity</module>
 	</modules>
 
 	<parent>
