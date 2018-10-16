@@ -1,0 +1,29 @@
+server:
+  port: 18080
+spring:
+   datasource:
+       url: jdbc:mysql://192.168.0.100:3316/goldbuy?useSSL=false&allowMultiQueries=true
+       username: root
+       password: mysql@1qaz!QAZ
+       driver-class-name: com.mysql.jdbc.Driver
+       hikari:
+          maximum-pool-size: 15
+          connection-timeout: 60000
+dubbo:
+    service: version:1.0.0 #定义项目版本
+    scan:
+       basePackages: com.goldeasy.user.service.impl #调用dubbo组建扫描的项目路径
+    application:
+      id: easygold-user-service #注册在注册中心的名称，唯一标识，请勿重复
+      name: easygold-user-service #注册在注册中心的名称，唯一标识，请勿重复
+      qos-enable: false
+    protocol:
+      port: 30001 #暴露服务端口 （默认是20880，修改端口，不同的服务提供者端口不能重复）
+      retries: 1 #远程服务调用重试次数，不包括第一次调用，不需要重试请设为0，默认2
+      timeout: 120000
+      name: dubbo #默认名称，勿修改
+    registry:
+      id: zookeeper-registry
+      address: zookeeper://192.168.10.11:2181?backup=192.168.10.12:2181,192.168.10.13:2181
+
+
