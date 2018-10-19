@@ -101,6 +101,11 @@
             <artifactId>spring-web</artifactId>
             <version>5.0.2.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.goldeasy.common</groupId>
+            <artifactId>goldeasy-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
