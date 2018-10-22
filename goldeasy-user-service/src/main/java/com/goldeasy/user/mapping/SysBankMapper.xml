@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldeasy.user.mapper.SysBankMapper" >
+  <resultMap id="BaseResultMap" type="com.fx.elephant.model.SysBank" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="SMALLINT" />
+    <result column="bank_state" property="bankState" jdbcType="SMALLINT" />
+    <result column="bank_icon" property="bankIcon" jdbcType="VARCHAR" />
+    <result column="bank_background_icon" property="bankBackgroundIcon" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>
