@@ -28,6 +28,17 @@
 			<artifactId>goldeasy-user-entity</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.goldeasy.common</groupId>
+			<artifactId>goldeasy-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>groupId>tk.mybatis</groupId>
+					<artifactId>mapper-spring-boot-starter</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<build>
