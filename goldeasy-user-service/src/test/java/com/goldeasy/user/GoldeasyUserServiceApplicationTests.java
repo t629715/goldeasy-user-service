@@ -1,5 +1,7 @@
 package com.goldeasy.user;
 
+import com.goldeasy.common.response.CommonResponse;
+import com.goldeasy.user.dto.UserRegisterDTO;
 import com.goldeasy.user.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +23,20 @@ public class GoldeasyUserServiceApplicationTests {
 
 	@Test
 	public void testRegister(){
-		userService.register("123","111111");
+		UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
+		userRegisterDTO.setPhone("13271756102");
+		userRegisterDTO.setPassword("qq123456");
+//		userService.register(userRegisterDTO);
 	}
+
+	@Test
+	public void testLogin(){
+		try {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
 
 }

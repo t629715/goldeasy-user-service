@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan("com.goldeasy.common")
 public class GoldeasyUserServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GoldeasyUserServiceApplication.class, args);

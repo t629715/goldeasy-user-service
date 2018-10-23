@@ -53,8 +53,10 @@ public class JwtUtil {
         Date now = new Date(times);
         JwtBuilder builder = Jwts.builder()
                 .setId(JWTConstant.JWT_ID)
-                .setIssuedAt(now) //创建时间
-                .setSubject(subject) //主题，个人的一些信息
+                //创建时间
+                .setIssuedAt(now)
+                //主题，个人的一些信息
+                .setSubject(subject)
 //			.setIssuer(issuer) //发送谁
 //			.setAudience(audience) //个人签名
                 .signWith(signatureAlgorithm, key);

@@ -6,6 +6,9 @@ import com.goldeasy.common.redis.RedisService;
 import com.goldeasy.common.response.CommonResponse;
 import com.goldeasy.common.response.ResponseEnum;
 import com.goldeasy.common.util.DateTimeUtil;
+import com.goldeasy.common.util.MD5Util;
+import com.goldeasy.user.dto.UserLoginDTO;
+import com.goldeasy.user.dto.UserRegisterDTO;
 import com.goldeasy.user.entity.UserAccountInfo;
 import com.goldeasy.user.entity.UserGoldAccountInfo;
 import com.goldeasy.user.entity.UserInfo;
@@ -18,9 +21,6 @@ import com.goldeasy.user.service.UserService;
 
 import com.goldeasy.user.util.HttpUtil;
 import com.goldeasy.user.util.JwtUtil;
-import com.goldeasy.user.util.Md5Util;
-import com.goldeasy.user.vo.UserInfoVO;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author:tianliya
@@ -83,16 +84,17 @@ public class UserServiceImpl implements UserService {
     /**
      * fetch 用户注册的业务接口，创建用户账号，初始化用户账户信息表、用户积分表、用户黄金账户表
      *
-     * @param userInfoVO 用户手机号
+     * @param userRegisterDTO 用户手机号
      * @return CommonResponse
      * @author: tianliya
      * @time: 2018/10/22
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public CommonResponse register(UserInfoVO userInfoVO) {
+    public String register(UserRegisterDTO userRegisterDTO) {
         try {
-            Long userId = this.initUserInfo(userInfoVO);
+
+            Long userId = this.initUserInfo(userRegisterDTO);
             if (userId != null) {
                 //调用初始化用户信息方法
                 if (this.initUserAccount(userId)) {
@@ -100,47 +102,57 @@ public class UserServiceImpl implements UserService {
                     if (this.initUserGoldAccount(userId)) {
                         //调用初始化积分账户信息方法
                         if (this.initUserMarkAccount(userId)) {
-                            return CommonResponse.response(ResponseEnum.SUCCESS.getCode(), "注册成功");
+                            return "success";
                         }
                     }
                 }
+            }else {
+                return "exist";
             }
         } catch (Exception e) {
             e.printStackTrace();
             throw new UserModuleException("用户注册异常");
         }
-        return CommonResponse.response(ResponseEnum.FAILED.getCode(), "注册失败");
+        return "false";
     }
 
     /**
      * fetch 用户登陆功能业务接口，
      *
-     * @param phone    用户手机号
-     * @param password 用户密码
      * @return CommonResponse
      * @author: tianliya
      * @time: 2018/10/22
      */
 
     @Override
-    public CommonResponse login(String phone, String password, HttpServletRequest request) throws Exception {
-        this.logger.info("根据用户名获取用户信息，用户信息：{}", phone);
+    public Map login(UserLoginDTO userLoginDTO) throws Exception {
+        this.logger.info("根据用户名获取用户信息，用户信息：{}", userLoginDTO.toString());
+        Map map = new ConcurrentHashMap();
         //判断用户是否存在或
         UserInfo userInfo = new UserInfo();
-        userInfo.setUserName(phone);
+        userInfo.setUserName(userLoginDTO.getPhone());
         UserInfo userInfoQuery = this.userInfoMapper.selectOne(userInfo);
         if (userInfoQuery != null) {
             //判断用户密码是否正确
-            if (!Md5Util.getMD5Str(password).equals(userInfoQuery.getPassword())) {
-                //设置登陆IP
-                userInfoQuery.setLoginTime(DateTimeUtil.toDate(LocalDate.now()));
+            System.out.println();
+            if (MD5Util.getMD5(userLoginDTO.getPassword()).equals(userInfoQuery.getPassword())) {
                 //设置登陆时间
-                userInfoQuery.setLoginFrom(HttpUtil.getLoginWay(request));
+                userInfo.setLoginTime(DateTimeUtil.toDate(LocalDateTime.now()));
                 //设置登陆设备
-                userInfoQuery.setLoginIp(HttpUtil.getIp(request));
+                userInfo.setLoginFrom(userLoginDTO.getLoginFrom());
+                //设置登陆IP
+                userInfo.setLoginIp(userLoginDTO.getLoginIp());
                 //更新登陆信息
                 this.userInfoMapper.updateByPrimaryKeySelective(userInfo);
+            }else {
+                map.put("state",false);
+                map.put("data","用户不存在或密码错误");
+                return  map;
             }
+        }else {
+            map.put("state","false");
+            map.put("data","用户不存在或密码错误");
+            return  map;
         }
         long nowMillis = System.currentTimeMillis();
         //调用JWT生成token
@@ -149,9 +161,11 @@ public class UserServiceImpl implements UserService {
                         nowMillis);
 
         //将登陆信息存储到redis中  有限时间未7天
-        redisService.put(String.valueOf(userInfoQuery.getId()), String.valueOf(nowMillis),24*7*60);
+        this.redisService.put(String.valueOf(userInfoQuery.getId()), String.valueOf(nowMillis),24*7*60);
         //将token返回给浏览器
-        return CommonResponse.response(1001,"登陆成功",token);
+        map.put("state","success");
+        map.put("data",token);
+        return map;
     }
 
     /**
@@ -164,60 +178,67 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public CommonResponse modifyPassword(String password) {
+    public Boolean modifyPassword(String password) {
         return null;
     }
 
     /**
      * fetch 初始化用户的信息表
      *
-     * @param userInfoVO
+     * @param userRegisterDTO
      * @return
      * @author: tianliya
      * @time: 2018/10/22
      */
-    private Long initUserInfo(UserInfoVO userInfoVO) {
-        this.logger.info("初始化用户信息表数据，用户信息：{}", userInfoVO.toString());
+    private Long initUserInfo(UserRegisterDTO userRegisterDTO) {
+        this.logger.info("初始化用户信息表数据，用户信息：{}", userRegisterDTO.toString());
         //插入UserInfo数据
         UserInfo userInfo = new UserInfo();
+
         //设置密码
-        userInfo.setPassword(userInfoVO.getPassword());
+        userInfo.setPassword(MD5Util.getMD5(userRegisterDTO.getPassword()));
+        userInfo.setUserName(userRegisterDTO.getPhone());
+
+        UserInfo infoFoeQuery = this.userInfoMapper.selectOne(userInfo);
+        if (infoFoeQuery != null){
+            return null;
+        }
         //设置总经理id
-        if (userInfoVO.getGeneralManagerId() != null) {
-            userInfo.setGeneralManagerId(userInfoVO.getGeneralManagerId());
+        if (userRegisterDTO.getGeneralManagerId() != null) {
+            userInfo.setGeneralManagerId(userRegisterDTO.getGeneralManagerId());
         } else {
             userInfo.setGeneralManagerId(Long.parseLong(this.generalManagerId));
         }
         //设置总监id
-        if (userInfoVO.getMarketingDirectorId() != null) {
-            userInfo.setMarketingDirectorId(userInfoVO.getMarketingDirectorId());
+        if (userRegisterDTO.getMarketingDirectorId() != null) {
+            userInfo.setMarketingDirectorId(userRegisterDTO.getMarketingDirectorId());
         } else {
             userInfo.setMarketingDirectorId(Long.parseLong(this.marketingDirectorId));
         }
         //设置经理id
-        if (userInfoVO.getManagerId() != null) {
-            userInfo.setManagerId(userInfoVO.getManagerId());
+        if (userRegisterDTO.getManagerId() != null) {
+            userInfo.setManagerId(userRegisterDTO.getManagerId());
         } else {
             userInfo.setManagerId(Long.parseLong(this.managerId));
         }
         //设置主管id
-        if (userInfoVO.getDirectorId() != null) {
-            userInfo.setDirectorId(userInfoVO.getDirectorId());
+        if (userRegisterDTO.getDirectorId() != null) {
+            userInfo.setDirectorId(userRegisterDTO.getDirectorId());
         } else {
             userInfo.setDirectorId(Long.parseLong(this.directorId));
         }
         //设置经纪人id
-        if (userInfoVO.getBrokerId() != null) {
-            userInfo.setBrokerId(userInfoVO.getBrokerId());
+        if (userRegisterDTO.getBrokerId() != null) {
+            userInfo.setBrokerId(userRegisterDTO.getBrokerId());
         } else {
             userInfo.setBrokerId(Long.parseLong(this.brokerId));
         }
         //设置添加时间
-        userInfo.setRegisterTime(DateTimeUtil.toDate(LocalDate.now()));
+        userInfo.setRegisterTime(DateTimeUtil.toDate(LocalDateTime.now()));
         //设置注册IP
-        userInfo.setRegisterIp(userInfoVO.getRegisterIp());
+        userInfo.setRegisterIp(userRegisterDTO.getRegisterIp());
         //设置注册设备
-        userInfo.setRegisterFrom(userInfoVO.getRegisterDevice());
+        userInfo.setRegisterFrom(userRegisterDTO.getRegisterDevice());
         try {
             this.userInfoMapper.insertSelective(userInfo);
         } catch (Exception e) {
@@ -241,7 +262,7 @@ public class UserServiceImpl implements UserService {
         //设置用户id
         userAccountInfo.setUserId(userId);
         //设置添加数据时间
-        userAccountInfo.setGmtCreate(DateTimeUtil.toDate(LocalDate.now()));
+        userAccountInfo.setGmtCreate(DateTimeUtil.toDate(LocalDateTime.now()));
         try {
             int flag = this.userAccountInfoMapper.insertSelective(userAccountInfo);
             if (flag > 0) {
@@ -269,7 +290,7 @@ public class UserServiceImpl implements UserService {
         UserMarkAccountInfo userMarkAccountInfo = new UserMarkAccountInfo();
         userMarkAccountInfo.setUserId(userId);
         //设置初始化时间
-        userMarkAccountInfo.setGmtCreate(DateTimeUtil.toDate(LocalDate.now()));
+        userMarkAccountInfo.setGmtCreate(DateTimeUtil.toDate(LocalDateTime.now()));
         try {
             int flag = this.userMarkAccountInfoMapper.insertSelective(userMarkAccountInfo);
             if (flag > 0) {
@@ -298,7 +319,7 @@ public class UserServiceImpl implements UserService {
         UserGoldAccountInfo userGoldAccountInfo = new UserGoldAccountInfo();
         userGoldAccountInfo.setUserId(userId);
         //设置初始化时间
-        userGoldAccountInfo.setGmtCreate(DateTimeUtil.toDate(LocalDate.now()));
+        userGoldAccountInfo.setGmtCreate(DateTimeUtil.toDate(LocalDateTime.now()));
         try {
             int flag = this.userGoldAccountInfoMapper.insertSelective(userGoldAccountInfo);
             if (flag > 0) {
