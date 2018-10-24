@@ -13,6 +13,12 @@ public class UserInvoiceInfo {
     private Long id;
 
     /**
+     * 用户ID
+     */
+    @Column(name = "user_id")
+    private Long userId;
+
+    /**
      * 发票抬头
      */
     @Column(name = "invoice_title")
@@ -64,6 +70,24 @@ public class UserInvoiceInfo {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * 获取用户ID
+     *
+     * @return user_id - 用户ID
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * 设置用户ID
+     *
+     * @param userId 用户ID
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     /**

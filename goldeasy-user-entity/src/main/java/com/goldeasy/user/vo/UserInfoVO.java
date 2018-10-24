@@ -1,130 +1,157 @@
 package com.goldeasy.user.vo;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+
 /**
  * @author: tianliya
- * @date: 2018/10/22
- * @description:
+ * @date: 2018/10/23
+ * @description: 用户页面展示的用户信息类
  */
-public class UserInfoVO  {
+public class UserInfoVO implements Serializable {
+
+    private static final long serialVersionUID = -6111734094884630834L;
     /**
-     * 手机号
+     * 用户头像
      */
-    public String phone;
+    private String userHeadImage;
     /**
-     * 密码
+     * 用户名
      */
-    public String password;
+    private String userName;
     /**
-     * 总经理id
+     * 用户昵称
      */
-    public Long generalManagerId;
+    private String userNickName;
     /**
-     * 市场总监id
+     * 我的订单-已支付订单数量
      */
-    public Long marketingDirectorId;
+    private Integer alreadyPaidAmount;
+
     /**
-     * 经理id
+     * 我的订单-已完成订单数量
      */
-    public Long managerId;
+    private Integer completedAmount;
+
     /**
-     * 主管id
+     * 我的订单-待收获订单数量
      */
-    public Long directorId;
+    private Integer waitReceiveAmount;
     /**
-     * 经纪人id
+     * 是否有维度消息
      */
-    public Long brokerId;
+    private Integer unReadAmount;
+    /**
+     * 积分余额
+     */
+    private BigDecimal markAmount;
+    /**
+     * 卡券数量
+     */
+    private Integer voucherAmount;
+    /**
+     * 预约数量
+     */
+    private Integer preAmount;
 
-    public String registerIp;
-    public String registerDevice;
-
-
-
-    public String getRegisterIp() {
-        return registerIp;
+    public Integer getUnReadAmount() {
+        return unReadAmount;
     }
 
-    public void setRegisterIp(String registerIp) {
-        this.registerIp = registerIp;
+    public void setUnReadAmount(Integer unReadAmount) {
+        this.unReadAmount = unReadAmount;
     }
 
-    public String getRegisterDevice() {
-        return registerDevice;
+    public BigDecimal getMarkAmount() {
+        return markAmount;
     }
 
-    public void setRegisterDevice(String registerDevice) {
-        this.registerDevice = registerDevice;
+    public void setMarkAmount(BigDecimal markAmount) {
+        this.markAmount = markAmount;
     }
 
-    public String getPhone() {
-        return phone;
+    public Integer getVoucherAmount() {
+        return voucherAmount;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setVoucherAmount(Integer voucherAmount) {
+        this.voucherAmount = voucherAmount;
     }
 
-    public String getPassword() {
-        return password;
+    public Integer getPreAmount() {
+        return preAmount;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPreAmount(Integer preAmount) {
+        this.preAmount = preAmount;
     }
 
-    public Long getGeneralManagerId() {
-        return generalManagerId;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void setGeneralManagerId(Long generalManagerId) {
-        this.generalManagerId = generalManagerId;
+    public String getUserHeadImage() {
+        return userHeadImage;
     }
 
-    public Long getMarketingDirectorId() {
-        return marketingDirectorId;
+    public void setUserHeadImage(String userHeadImage) {
+        this.userHeadImage = userHeadImage;
     }
 
-    public void setMarketingDirectorId(Long marketingDirectorId) {
-        this.marketingDirectorId = marketingDirectorId;
+    public String getUserName() {
+        return userName;
     }
 
-    public Long getManagerId() {
-        return managerId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setManagerId(Long managerId) {
-        this.managerId = managerId;
+    public String getUserNickName() {
+        return userNickName;
     }
 
-    public Long getDirectorId() {
-        return directorId;
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
-    public void setDirectorId(Long directorId) {
-        this.directorId = directorId;
+    public Integer getAlreadyPaidAmount() {
+        return alreadyPaidAmount;
     }
 
-    public Long getBrokerId() {
-        return brokerId;
+    public void setAlreadyPaidAmount(Integer alreadyPaidAmount) {
+        this.alreadyPaidAmount = alreadyPaidAmount;
     }
 
-    public void setBrokerId(Long brokerId) {
-        this.brokerId = brokerId;
+    public Integer getCompletedAmount() {
+        return completedAmount;
+    }
+
+    public void setCompletedAmount(Integer completedAmount) {
+        this.completedAmount = completedAmount;
+    }
+
+
+    public Integer getWaitReceiveAmount() {
+        return waitReceiveAmount;
+    }
+
+    public void setWaitReceiveAmount(Integer waitReceiveAmount) {
+        this.waitReceiveAmount = waitReceiveAmount;
     }
 
     @Override
     public String toString() {
         return "UserInfoVO{" +
-                "phone='" + phone + '\'' +
-                ", password='" + password + '\'' +
-                ", generalManagerId=" + generalManagerId +
-                ", marketingDirectorId=" + marketingDirectorId +
-                ", managerId=" + managerId +
-                ", directorId=" + directorId +
-                ", brokerId=" + brokerId +
-                ", registerIp='" + registerIp + '\'' +
-                ", registerDevice='" + registerDevice + '\'' +
+                "userHeadImage='" + userHeadImage + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userNickName='" + userNickName + '\'' +
+                ", alreadyPaidAmount=" + alreadyPaidAmount +
+                ", completedAmount=" + completedAmount +
+                ", waitReceiveAmount=" + waitReceiveAmount +
+                ", unReadAmount=" + unReadAmount +
+                ", markAmount=" + markAmount +
+                ", voucherAmount=" + voucherAmount +
+                ", preAmount=" + preAmount +
                 '}';
     }
-
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.goldeasy.user.mapper.UserMarkAccountInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.fx.elephant.model.UserMarkAccountInfo" >
+  <resultMap id="BaseResultMap" type="com.goldeasy.user.entity.UserMarkAccountInfo" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -11,4 +11,9 @@
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <!--根据id获取用户的积分-tianliya-->
+  <select id="getMarkAmountById" resultType="java.math.BigDecimal" parameterType="java.lang.Long">
+    select mark_amount markAmount from user_mark_account_info where user_id = #{id,jdbcType=BIGINT}
+  </select>
 </mapper>

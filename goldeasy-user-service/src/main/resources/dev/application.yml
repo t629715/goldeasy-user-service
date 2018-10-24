@@ -1,5 +1,5 @@
 server:
-  port: 18080
+  port: 18082
 spring:
    datasource:
        url: jdbc:mysql://192.168.0.37:3306/goldbuy?useSSL=false&allowMultiQueries=true
@@ -19,7 +19,8 @@ spring:
          min-idle: 10
          max-wait: 10000ms
 dubbo:
-    service: version:1.0.0 #定义项目版本
+    service:
+      version: 1.0.0 #定义项目版本
     scan:
        basePackages: com.goldeasy.user.service.impl #调用dubbo组建扫描的项目路径
     application:
@@ -35,7 +36,8 @@ dubbo:
       id: zookeeper-registry
       address: zookeeper://192.168.10.11:2181?backup=192.168.10.12:2181,192.168.10.13:2181
 
-
+mybatis:
+  mapper-locations: classpath:com/goldeasy/*/mapping/*.xml
 userInfo:
   generalManagerId: 111111
   marketingDirectorId: 222222

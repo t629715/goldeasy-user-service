@@ -3,6 +3,7 @@ package com.goldeasy.user.service;
 import com.goldeasy.common.response.CommonResponse;
 import com.goldeasy.user.dto.UserLoginDTO;
 import com.goldeasy.user.dto.UserRegisterDTO;
+import com.goldeasy.user.vo.UserInfoVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -29,16 +30,40 @@ public interface UserService {
      * @param userLoginDTO
      * @return CommonResponse
      */
-    Map login(UserLoginDTO userLoginDTO) throws Exception;
+    Map login(UserLoginDTO userLoginDTO);
 
     /**
      * fetch 用户修改密码业务接口
      * @author: tianliya
      * @time: 2018/10/22
      * @param password 用户新密码
+     * @param userId
      * @return CommonResponse
      */
-    Boolean modifyPassword(String password);
+    Boolean modifyPassword(String password, Long userId);
+
+
+    /**
+     * fetch 用户修改密码-验证旧密码是否正确
+     * @author: tianliya
+     * @time: 2018/10/22
+     * @param password 用户旧密码
+     * @param userId
+     * @return CommonResponse
+     */
+    Boolean validatePassword(String password, Long userId);
+
+    /**
+     * fetch 根据用户的id获取用户的信息
+     * @author: tianliya
+     * @time: 2018/10/23
+     * @param userId
+     * @return
+     */
+    UserInfoVO getUserInfoById(Long userId);
+
+
+
 
 
 }

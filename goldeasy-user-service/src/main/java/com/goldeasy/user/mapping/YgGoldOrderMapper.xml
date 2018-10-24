@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldeasy.user.mapper.YgGoldOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.goldeasy.user.entity.YgGoldOrder" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="jq_order_id" property="jqOrderId" jdbcType="INTEGER" />
+    <result column="buy_amount" property="buyAmount" jdbcType="DECIMAL" />
+    <result column="total_gold_amount" property="totalGoldAmount" jdbcType="DECIMAL" />
+    <result column="total_withdraw_amount" property="totalWithdrawAmount" jdbcType="DECIMAL" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+    <result column="buy_num" property="buyNum" jdbcType="INTEGER" />
+    <result column="buy_weight" property="buyWeight" jdbcType="INTEGER" />
+    <result column="buy_price" property="buyPrice" jdbcType="DECIMAL" />
+    <result column="poundage" property="poundage" jdbcType="DECIMAL" />
+    <result column="processing_fee" property="processingFee" jdbcType="DECIMAL" />
+    <result column="invoice_fee" property="invoiceFee" jdbcType="DECIMAL" />
+    <result column="is_invoice" property="isInvoice" jdbcType="TINYINT" />
+    <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+    <result column="invoice_info" property="invoiceInfo" jdbcType="VARCHAR" />
+    <result column="invoice_mail" property="invoiceMail" jdbcType="VARCHAR" />
+    <result column="storage_fee" property="storageFee" jdbcType="DECIMAL" />
+    <result column="packing_fee" property="packingFee" jdbcType="DECIMAL" />
+    <result column="logistic_fee" property="logisticFee" jdbcType="DECIMAL" />
+    <result column="voucher_value" property="voucherValue" jdbcType="DECIMAL" />
+    <result column="voucher_id" property="voucherId" jdbcType="BIGINT" />
+    <result column="integral_value" property="integralValue" jdbcType="DECIMAL" />
+    <result column="used_integral" property="usedIntegral" jdbcType="INTEGER" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="receiver_phone" property="receiverPhone" jdbcType="VARCHAR" />
+    <result column="receive_address" property="receiveAddress" jdbcType="VARCHAR" />
+    <result column="logistic_no" property="logisticNo" jdbcType="VARCHAR" />
+    <result column="delivery_type" property="deliveryType" jdbcType="SMALLINT" />
+    <result column="order_state" property="orderState" jdbcType="SMALLINT" />
+    <result column="order_type" property="orderType" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="complete_time" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="conf" property="conf" jdbcType="VARCHAR" />
+    <result column="spare" property="spare" jdbcType="VARCHAR" />
+    <result column="general_manager_id" property="generalManagerId" jdbcType="BIGINT" />
+    <result column="marketing_director_id" property="marketingDirectorId" jdbcType="BIGINT" />
+    <result column="manager_id" property="managerId" jdbcType="BIGINT" />
+    <result column="director_id" property="directorId" jdbcType="BIGINT" />
+    <result column="broker_id" property="brokerId" jdbcType="BIGINT" />
+  </resultMap>
+
+  <!--获取已支付、待收货、已完成的订单的数量-tianliya-->
+
+  <select id="getOrderAmountByState"  resultType="java.lang.Integer">
+    select count(*) from yg_gold_order where user_id = #{userId,jdbcType=BIGINT} AND order_state = #{orderState,jdbcType=SMALLINT}
+  </select>
+</mapper>

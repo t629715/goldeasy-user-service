@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.goldeasy.user.mapper.UserInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.fx.elephant.model.UserInfo" >
+  <resultMap id="BaseResultMap" type="com.goldeasy.user.entity.UserInfo" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -33,4 +33,11 @@
     <result column="director_id" property="directorId" jdbcType="BIGINT" />
     <result column="broker_id" property="brokerId" jdbcType="BIGINT" />
   </resultMap>
+
+  <!--获取用户的昵称、用户名、头像-tianliya-->
+  <select id="getUserInfoById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select t1.user_name , t1.user_nick_name , t1.user_head_image
+    from user_info t1
+    where t1.id = #{id,jdbcType=BIGINT}
+  </select>
 </mapper>
