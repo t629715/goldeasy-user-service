@@ -19,6 +19,7 @@ import com.goldeasy.user.service.UserService;
 import com.goldeasy.user.util.HttpUtil;
 import com.goldeasy.user.util.JwtUtil;
 import com.goldeasy.user.vo.UserInfoVO;
+import com.goldeasy.user.vo.UserNickNameVO;
 import com.goldeasy.user.vo.UserPersonalVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -290,6 +291,45 @@ public class UserServiceImpl implements UserService {
         }catch (Exception e){
             e.printStackTrace();
             throw new UserModuleException("个人信息获取用户的头像地址异常",e.getCause());
+        }
+    }
+
+    @Override
+    public UserNickNameVO getUserNickName(Long userId) {
+        this.logger.info("获取用户昵称-业务层");
+        try{
+            UserNickNameVO userNickNameVO = this.userInfoMapper.getUserNickName(userId);
+            return userNickNameVO;
+        }catch (Exception e){
+            e.printStackTrace();
+            this.logger.error("获取用户昵称-业务层异常,用户id:{},异常信息:{}",userId,e.getMessage());
+            throw new UserModuleException("获取用户昵称异常",e.getCause());
+        }
+    }
+
+    /**
+     * fetch 修改用户昵称
+     * @author: tianliya
+     * @time: 2018/10/24
+     * @param userId
+     * @param userNickName
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean updateUserNickName(Long userId, String userNickName) {
+        this.logger.info("修改用户昵称-业务层");
+        try{
+            int flag = this.userInfoMapper.updateUserNickName(userId, userNickName);
+            if (flag > 0){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            this.logger.error("获取用户昵称-业务层异常,用户id:{},用户昵称:{},异常信息:{}",userId,userNickName,e.getMessage());
+            throw new UserModuleException("获取用户昵称异常",e.getCause());
         }
     }
 

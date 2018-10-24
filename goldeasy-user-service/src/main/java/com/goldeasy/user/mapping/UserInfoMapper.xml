@@ -45,4 +45,14 @@
   <select id="getUserHeadImage" parameterType="java.lang.Long" resultType="java.lang.String">
     select user_head_image from user_info where id = #{userId,jdbcType=BIGINT}
   </select>
+
+  <!--用户获取昵称-tianliya-->
+  <select id="getUserNickName" parameterType="java.lang.Long" resultType="com.goldeasy.user.vo.UserNickNameVO">
+    select IFNULL(user_nick_name,'未设置昵称') userNickName from user_info where id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <!--用户修改昵称-tianliya-->
+  <update id="updateUserNickName">
+    update user_info set user_nick_name = #{userNickName,jdbcType=VARCHAR} where id = #{userId,jdbcType=BIGINT}
+  </update>
 </mapper>

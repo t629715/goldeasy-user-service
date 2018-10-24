@@ -4,6 +4,7 @@ import com.goldeasy.common.response.CommonResponse;
 import com.goldeasy.user.dto.UserLoginDTO;
 import com.goldeasy.user.dto.UserRegisterDTO;
 import com.goldeasy.user.vo.UserInfoVO;
+import com.goldeasy.user.vo.UserNickNameVO;
 import com.goldeasy.user.vo.UserPersonalVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,6 +72,25 @@ public interface UserService {
      * @return
      */
     UserPersonalVO getUserHeadImage(Long userId);
+
+    /**
+     * fetch 湖区用户昵称
+     * @author: tianliya
+     * @time: 2018/10/24
+     * @param userId
+     * @return
+     */
+    UserNickNameVO getUserNickName(Long userId);
+
+    /**
+     * fetch 用户修改昵称
+     * @author: tianliya
+     * @time: 2018/10/24
+     * @param userId
+     * @param userNickName
+     * @return
+     */
+    Boolean updateUserNickName(Long userId, String userNickName);
 
 
 
