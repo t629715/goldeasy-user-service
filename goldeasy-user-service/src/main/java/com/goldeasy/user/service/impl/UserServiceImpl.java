@@ -19,6 +19,7 @@ import com.goldeasy.user.service.UserService;
 import com.goldeasy.user.util.HttpUtil;
 import com.goldeasy.user.util.JwtUtil;
 import com.goldeasy.user.vo.UserInfoVO;
+import com.goldeasy.user.vo.UserPersonalVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -270,6 +271,26 @@ public class UserServiceImpl implements UserService {
         //获取卡券数量
         userInfoVO.setVoucherAmount(2);
         return userInfoVO;
+    }
+
+    /**
+     * fetch 获取用户的头像地址
+     * @author: tianliya
+     * @time: 2018/10/24
+     * @param userId
+     * @return
+     */
+    @Override
+    public UserPersonalVO getUserHeadImage(Long userId) {
+        try{
+            UserPersonalVO userPersonalVO = new UserPersonalVO();
+            String userHeadImage = this.userInfoMapper.getUserHeadImage(userId);
+            userPersonalVO.setUserHeadImage(userHeadImage);
+            return userPersonalVO;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new UserModuleException("个人信息获取用户的头像地址异常",e.getCause());
+        }
     }
 
     /**

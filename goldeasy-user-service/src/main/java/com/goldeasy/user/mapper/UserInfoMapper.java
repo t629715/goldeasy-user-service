@@ -18,4 +18,13 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
      * @return
      */
     UserInfo getUserInfoById(Long id);
+
+    /**
+     * fetch 获取用户的头像地址
+     * @author: tianliya
+     * @time: 2018/10/24
+     * @param userId
+     * @return
+     */
+    String getUserHeadImage(Long userId);
 }

@@ -36,8 +36,13 @@
 
   <!--获取用户的昵称、用户名、头像-tianliya-->
   <select id="getUserInfoById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select t1.user_name , t1.user_nick_name , t1.user_head_image
+    select INSERT(t1.user_name,4,4,'****') user_name , t1.user_nick_name , t1.user_head_image
     from user_info t1
     where t1.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--获取用户的头像地址-tianliya-->
+  <select id="getUserHeadImage" parameterType="java.lang.Long" resultType="java.lang.String">
+    select user_head_image from user_info where id = #{userId,jdbcType=BIGINT}
   </select>
 </mapper>

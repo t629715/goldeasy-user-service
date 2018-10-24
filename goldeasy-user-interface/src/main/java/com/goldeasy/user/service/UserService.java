@@ -4,6 +4,7 @@ import com.goldeasy.common.response.CommonResponse;
 import com.goldeasy.user.dto.UserLoginDTO;
 import com.goldeasy.user.dto.UserRegisterDTO;
 import com.goldeasy.user.vo.UserInfoVO;
+import com.goldeasy.user.vo.UserPersonalVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -61,6 +62,15 @@ public interface UserService {
      * @return
      */
     UserInfoVO getUserInfoById(Long userId);
+
+    /**
+     * fetch 获取用户的头像地址
+     * @author: tianliya
+     * @time: 2018/10/24
+     * @param userId
+     * @return
+     */
+    UserPersonalVO getUserHeadImage(Long userId);
 
 
 
