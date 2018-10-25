@@ -48,4 +48,14 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
      * @return
      */
     UserNickNameVO getUserNickName(Long userId);
+
+    /**
+     * fetch 修改用户头像
+     * @author: tianliya
+     * @time: 2018/10/24
+     * @param userId 用户id
+     * @param userHeadImage 用户头像
+     * @return
+     */
+    int updateUserHeadImage(@Param("userId") Long userId, @Param("userHeadImage") String userHeadImage);
 }

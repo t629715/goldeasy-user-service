@@ -24,8 +24,8 @@ dubbo:
     scan:
        basePackages: com.goldeasy.user.service.impl #调用dubbo组建扫描的项目路径
     application:
-      id: easygold-user-service #注册在注册中心的名称，唯一标识，请勿重复
-      name: easygold-user-service #注册在注册中心的名称，唯一标识，请勿重复
+      id: goldeasy-user-service #注册在注册中心的名称，唯一标识，请勿重复
+      name: goldeasy-user-service #注册在注册中心的名称，唯一标识，请勿重复
       qos-enable: false
     protocol:
       port: 30001 #暴露服务端口 （默认是20880，修改端口，不同的服务提供者端口不能重复）
@@ -34,7 +34,7 @@ dubbo:
       name: dubbo #默认名称，勿修改
     registry:
       id: zookeeper-registry
-      address: zookeeper://192.168.10.11:2181?backup=192.168.10.12:2181,192.168.10.13:2181
+      address: zookeeper://192.168.0.100:2182?backup=192.168.0.100:2183,192.168.0.100:2184
 
 mybatis:
   mapper-locations: classpath:com/goldeasy/*/mapping/*.xml
@@ -45,4 +45,8 @@ userInfo:
   directorId: 444444
   brokerId: 555555
 
-
+ossConfig:
+  endpoint: 11111
+  accessKeyId: 222222
+  accessKeySecret: 33333
+  bucketName: 44444

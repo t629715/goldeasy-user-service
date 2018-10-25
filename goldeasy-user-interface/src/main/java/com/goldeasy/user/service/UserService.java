@@ -1,13 +1,11 @@
 package com.goldeasy.user.service;
 
-import com.goldeasy.common.response.CommonResponse;
 import com.goldeasy.user.dto.UserLoginDTO;
 import com.goldeasy.user.dto.UserRegisterDTO;
 import com.goldeasy.user.vo.UserInfoVO;
 import com.goldeasy.user.vo.UserNickNameVO;
 import com.goldeasy.user.vo.UserPersonalVO;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -91,6 +89,16 @@ public interface UserService {
      * @return
      */
     Boolean updateUserNickName(Long userId, String userNickName);
+
+    /**
+     * fetch 修改头像
+     * @author: tianliya
+     * @time: 2018/10/24
+     * @param userId
+     * @param userHeadImage
+     * @return
+     */
+    Boolean updateUserHeadImage(Long userId, String userHeadImage);
 
 
 

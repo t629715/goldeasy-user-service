@@ -3,8 +3,6 @@ package com.goldeasy.user.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.goldeasy.common.exception.UserModuleException;
 import com.goldeasy.common.redis.RedisService;
-import com.goldeasy.common.response.CommonResponse;
-import com.goldeasy.common.response.ResponseEnum;
 import com.goldeasy.common.util.DateTimeUtil;
 import com.goldeasy.common.util.MD5Util;
 import com.goldeasy.user.dto.UserLoginDTO;
@@ -16,7 +14,6 @@ import com.goldeasy.user.entity.UserMarkAccountInfo;
 import com.goldeasy.user.mapper.*;
 import com.goldeasy.user.service.UserService;
 
-import com.goldeasy.user.util.HttpUtil;
 import com.goldeasy.user.util.JwtUtil;
 import com.goldeasy.user.vo.UserInfoVO;
 import com.goldeasy.user.vo.UserNickNameVO;
@@ -29,9 +26,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -330,6 +325,32 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             this.logger.error("获取用户昵称-业务层异常,用户id:{},用户昵称:{},异常信息:{}",userId,userNickName,e.getMessage());
             throw new UserModuleException("获取用户昵称异常",e.getCause());
+        }
+    }
+
+    /**
+     * fetch 修改用户头像
+     * @author: tianliya
+     * @time: 2018/10/24
+     * @param userId
+     * @param userHeadImage
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean updateUserHeadImage(Long userId, String userHeadImage) {
+        this.logger.info("用户修改头像业务层");
+        try{
+            int flag = this.userInfoMapper.updateUserHeadImage(userId,userHeadImage );
+            if (flag > 0){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            this.logger.error("用户修改头像业务层实现异常,用户id:{},用户头像地址:{},异常信息:{}",userId,userHeadImage,e.getMessage());
+            throw new UserModuleException("用户修改头像异常");
         }
     }
 
