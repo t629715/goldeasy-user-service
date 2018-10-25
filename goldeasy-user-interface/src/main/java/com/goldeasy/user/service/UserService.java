@@ -1,5 +1,6 @@
 package com.goldeasy.user.service;
 
+import com.goldeasy.user.dto.UserBankCardDTO;
 import com.goldeasy.user.dto.UserLoginDTO;
 import com.goldeasy.user.dto.UserRegisterDTO;
 import com.goldeasy.user.vo.SysBankVO;
@@ -102,13 +103,7 @@ public interface UserService {
      */
     Boolean updateUserHeadImage(Long userId, String userHeadImage);
 
-    /**
-     * fetch 获取开户行列表信息
-     * @author: tianliya
-     * @time: 2018/10/25
-     * @return
-     */
-    List<SysBankVO> listSysBank();
+
 
 
 

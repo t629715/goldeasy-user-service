@@ -13,4 +13,36 @@
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>
+  <!--设置默认银行卡-tianliya-->
+  <update id="setDefault" parameterType="java.lang.Long">
+    UPDATE user_bank_card SET default_or_not = 1 WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--取消默认银行卡-tianliya-->
+  <update id="cancelDefault" parameterType="java.lang.Long">
+    UPDATE user_bank_card SET default_or_not = 0 WHERE default_or_not = 1
+  </update>
+
+  <!--绑定用户银行卡-tianliya-->
+
+  <insert id="addUserBankCard" parameterType="com.goldeasy.user.dto.UserBankCardDTO">
+    INSERT INTO user_bank_card (user_id, bank_id, bank_card_num,gmt_create)
+    VALUES (#{userId,jdbcType=BIGINT},#{bankId,jdbcType=BIGINT},#{bankCardNum,jdbcType=VARCHAR},#{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+
+  <!--删除用户银行卡-tianliya-->
+  <delete id="deleteUserBankCard" parameterType="java.lang.Long">
+    DELETE FROM  user_bank_card where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+
+  <!--获取用户银行列表-tianliya-->
+  <select id="listUserBankCard" parameterType="java.lang.Long" resultType="com.goldeasy.user.vo.UserBankVO">
+    SELECT t1.id,t1.bank_card_num bankCardNum,t2.bank_icon bankIcon, t2.bank_background_icon bankIconBackground,
+    t2.bank_name bankName
+    FROM user_bank_card t1
+    LEFT JOIN sys_bank t2
+    ON t1.bank_id = t2.id
+    WHERE t1.user_id = #{userId,jdbcType=BIGINT}
+    ORDER BY t1.id
+  </select>
 </mapper>

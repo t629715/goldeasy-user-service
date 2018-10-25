@@ -5,6 +5,7 @@ import com.goldeasy.common.exception.UserModuleException;
 import com.goldeasy.common.redis.RedisService;
 import com.goldeasy.common.util.DateTimeUtil;
 import com.goldeasy.common.util.MD5Util;
+import com.goldeasy.user.dto.UserBankCardDTO;
 import com.goldeasy.user.dto.UserLoginDTO;
 import com.goldeasy.user.dto.UserRegisterDTO;
 import com.goldeasy.user.entity.UserAccountInfo;
@@ -82,9 +83,6 @@ public class UserServiceImpl implements UserService {
     private YgGoldOrderMapper ygGoldOrderMapper;
     @Autowired
     private YgGoldRecoverOrderMapper ygGoldRecoverOrderMapper;
-    @Autowired
-    private SysBankMapper sysBankMapper;
-
     @Resource
     private RedisService redisService;
 
@@ -358,24 +356,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /**
-     * fetch 获取开户行列表
-     * @author: tianliya
-     * @time: 2018/10/25
-     * @return
-     */
-    @Override
-    public List<SysBankVO> listSysBank() {
-        this.logger.info("获取开户行列表业务层");
-        try{
-            List<SysBankVO> sysBankVOList = this.sysBankMapper.listSysBank();
-            return sysBankVOList;
-        }catch (Exception e){
-            e.printStackTrace();
-            this.logger.error("获取开户行列表业务层,异常信息:{}",e.getMessage());
-            throw new UserModuleException("获取开户行列表业务层");
-        }
-    }
+
 
     /**
      * fetch 初始化用户的信息表

@@ -16,10 +16,7 @@ public class UserBankVO implements Serializable {
      * 用户绑定的银行卡的id
      */
     private Long id;
-    /**
-     * 添加银行卡的时间
-     */
-    private Date addTime;
+
     /**
      * 用户的银行卡号
      */
@@ -45,13 +42,7 @@ public class UserBankVO implements Serializable {
         this.id = id;
     }
 
-    public Date getAddTime() {
-        return addTime;
-    }
 
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
 
     public String getBankCardNum() {
         return bankCardNum;
@@ -89,7 +80,6 @@ public class UserBankVO implements Serializable {
     public String toString() {
         return "UserBankListVO{" +
                 "id=" + id +
-                ", addTime=" + addTime +
                 ", bankCardNum='" + bankCardNum + '\'' +
                 ", bankIcon='" + bankIcon + '\'' +
                 ", bankIconBackground='" + bankIconBackground + '\'' +
