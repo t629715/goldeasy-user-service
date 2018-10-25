@@ -15,6 +15,7 @@ import com.goldeasy.user.mapper.*;
 import com.goldeasy.user.service.UserService;
 
 import com.goldeasy.user.util.JwtUtil;
+import com.goldeasy.user.vo.SysBankVO;
 import com.goldeasy.user.vo.UserInfoVO;
 import com.goldeasy.user.vo.UserNickNameVO;
 import com.goldeasy.user.vo.UserPersonalVO;
@@ -28,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -80,6 +82,8 @@ public class UserServiceImpl implements UserService {
     private YgGoldOrderMapper ygGoldOrderMapper;
     @Autowired
     private YgGoldRecoverOrderMapper ygGoldRecoverOrderMapper;
+    @Autowired
+    private SysBankMapper sysBankMapper;
 
     @Resource
     private RedisService redisService;
@@ -351,6 +355,25 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             this.logger.error("用户修改头像业务层实现异常,用户id:{},用户头像地址:{},异常信息:{}",userId,userHeadImage,e.getMessage());
             throw new UserModuleException("用户修改头像异常");
+        }
+    }
+
+    /**
+     * fetch 获取开户行列表
+     * @author: tianliya
+     * @time: 2018/10/25
+     * @return
+     */
+    @Override
+    public List<SysBankVO> listSysBank() {
+        this.logger.info("获取开户行列表业务层");
+        try{
+            List<SysBankVO> sysBankVOList = this.sysBankMapper.listSysBank();
+            return sysBankVOList;
+        }catch (Exception e){
+            e.printStackTrace();
+            this.logger.error("获取开户行列表业务层,异常信息:{}",e.getMessage());
+            throw new UserModuleException("获取开户行列表业务层");
         }
     }
 

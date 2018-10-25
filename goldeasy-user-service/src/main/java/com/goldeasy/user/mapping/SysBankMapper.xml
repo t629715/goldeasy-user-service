@@ -14,4 +14,8 @@
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>
+  <!--获取开户行列表信息-tianliya-->
+  <select id="listSysBank" resultType="com.goldeasy.user.vo.SysBankVO">
+    select id, bank_name bankName, bank_icon bankIcon from sys_bank where bank_state = 1 order by sort_no
+  </select>
 </mapper>
