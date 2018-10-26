@@ -37,7 +37,7 @@
 
   <!--获取用户银行列表-tianliya-->
   <select id="listUserBankCard" parameterType="java.lang.Long" resultType="com.goldeasy.user.vo.UserBankVO">
-    SELECT t1.id,t1.bank_card_num bankCardNum,t2.bank_icon bankIcon, t2.bank_background_icon bankIconBackground,
+    SELECT t1.id,INSERT(t1.bank_card_num,5,CHAR_LENGTH(t1.bank_card_num)-8,' **************** ') bankCardNum,t2.bank_icon bankIcon, t2.bank_background_icon bankIconBackground,
     t2.bank_name bankName
     FROM user_bank_card t1
     LEFT JOIN sys_bank t2

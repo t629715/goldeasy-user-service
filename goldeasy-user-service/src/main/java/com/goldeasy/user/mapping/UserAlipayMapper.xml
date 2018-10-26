@@ -11,4 +11,17 @@
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <!--绑定支付宝-tianliya-->
+  <insert id="bindAliPay" parameterType="com.goldeasy.user.entity.UserAlipay">
+    INSERT INTO user_alipay (alipay_num,user_id,gmt_create) VALUES(#{alipayNum,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <!--修改绑定的支付宝-tianliya-->
+  <update id="updateAliPay" parameterType="com.goldeasy.user.entity.UserAlipay">
+    UPDATE user_alipay SET alipay_num = #{alipayNum,jdbcType=VARCHAR} WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--获取绑定的支付宝-tianliya-->
+  <select id="getUserAliPayNum" parameterType="java.lang.Long" resultType="com.goldeasy.user.vo.UserAlipayVO">
+    SELECT id,alipay_num aliPayNum FROM user_alipay WHERE user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -1,10 +1,11 @@
 package com.goldeasy.user.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Table(name = "user_alipay")
-public class UserAlipay {
+public class UserAlipay implements Serializable {
     /**
      * 主键
      */
