@@ -53,7 +53,13 @@
 
   <!--获取已支付、待收货、已完成的订单的数量-tianliya-->
 
-  <select id="getOrderAmountByState"  resultType="java.lang.Integer">
-    select count(*) from yg_gold_order where user_id = #{userId,jdbcType=BIGINT} AND order_state = #{orderState,jdbcType=SMALLINT}
+  <select id="getOrderAmount"  resultType="com.goldeasy.user.dto.OrderAmountDTO">
+    select
+SUM(CASE WHEN order_state=1 then 1 ELSE NULL END) 'alreadyPaidAmount',
+SUM(CASE WHEN order_state=2 THEN 1 ELSE NULL END) 'waitReceiveAmount',
+SUM(CASE WHEN order_state=3 THEN 1 ELSE NULL END) 'completedAmount'
+from yg_gold_order
+where user_id = #{userId,jdbcType=BIGINT} and order_state in(1,2,3)
+
   </select>
 </mapper>

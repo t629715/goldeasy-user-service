@@ -1,8 +1,10 @@
 package com.goldeasy.user.mapper;
 
 import com.goldeasy.common.mapper.BaseMapper;
+import com.goldeasy.user.dto.UserRealNameDTO;
 import com.goldeasy.user.entity.UserInfo;
 import com.goldeasy.user.vo.UserNickNameVO;
+import com.goldeasy.user.vo.UserRealNameAuthVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -58,4 +60,21 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
      * @return
      */
     int updateUserHeadImage(@Param("userId") Long userId, @Param("userHeadImage") String userHeadImage);
+
+    /**
+     * fetch 获取用户实名认证信息
+     * @author: tianliya
+     * @time: 2018/10/26
+     * @param id
+     * @return
+     */
+    UserRealNameAuthVO getUserRealNameAuthInfo(Long id);
+
+    /**
+     * fetch 用户实名认证申请
+     * @author: tianliya
+     * @time: 2018/10/26
+     * @return
+     */
+    int userRealNameAuth(UserRealNameDTO userRealNameDTO);
 }

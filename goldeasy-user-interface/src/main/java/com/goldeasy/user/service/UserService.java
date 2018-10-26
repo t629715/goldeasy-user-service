@@ -1,14 +1,13 @@
 package com.goldeasy.user.service;
 
-import com.goldeasy.user.dto.UserBankCardDTO;
 import com.goldeasy.user.dto.UserLoginDTO;
+import com.goldeasy.user.dto.UserRealNameDTO;
 import com.goldeasy.user.dto.UserRegisterDTO;
-import com.goldeasy.user.vo.SysBankVO;
 import com.goldeasy.user.vo.UserInfoVO;
 import com.goldeasy.user.vo.UserNickNameVO;
 import com.goldeasy.user.vo.UserPersonalVO;
+import com.goldeasy.user.vo.UserRealNameAuthVO;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -102,6 +101,25 @@ public interface UserService {
      * @return
      */
     Boolean updateUserHeadImage(Long userId, String userHeadImage);
+
+    /**
+     * fetch 获取用户实名认证信息
+     * @author: tianliya
+     * @time: 2018/10/26
+     * @param userId
+     * @return
+     */
+    UserRealNameAuthVO getUserRealNameInfo(Long userId);
+
+    /**
+     * fetch 用户实名认证申请
+     * @author: tianliya
+     * @time: 2018/10/26
+     * @param userRealNameDTO
+     * @param userId
+     * @return
+     */
+    Boolean realNameAuth(UserRealNameDTO userRealNameDTO, Long userId);
 
 
 

@@ -55,4 +55,29 @@
   <update id="updateUserNickName">
     update user_info set user_nick_name = #{userNickName,jdbcType=VARCHAR} where id = #{userId,jdbcType=BIGINT}
   </update>
+
+  <!--用户修改头像-tianliya-->
+  <update id="updateUserHeadImage">
+    update user_info set user_head_image = #{userHeadImage,jdbcType=VARCHAR} where id = #{userId,jdbcType=BIGINT}
+  </update>
+
+  <!--获取用户实名认证信息-tianliya-->
+  <select id="getUserRealNameAuthInfo" parameterType="java.lang.Long" resultType="com.goldeasy.user.vo.UserRealNameAuthVO">
+    SELECT INSERT(user_real_name,1,2,'**') userRealName, INSERT(user_ID_card,5,CHAR_LENGTH(user_ID_card)-7,'*******') userIdCard, user_ID_card_positive idCardPositive, user_ID_card_back idCardBack,
+       real_name_auth_status realNameAuthState
+    FROM user_info
+    WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--用户实名认证申请-tianliya-->
+  <update id="userRealNameAuth" parameterType="com.goldeasy.user.dto.UserRealNameDTO">
+    UPDATE user_info
+    SET user_real_name = #{userRealName,jdbcType=VARCHAR},
+        user_ID_card = #{userIdCard,jdbcType=VARCHAR},
+        user_ID_card_positive = #{idCardPositive,jdbcType=VARCHAR},
+        user_ID_card_back = #{idCardBack,jdbcType=VARCHAR},
+        real_name_auth_apply_time = #{realNameAuthApplyTime,jdbcType=TIMESTAMP},
+        real_name_auth_status = #{realNameAuthState,jdbcType=SMALLINT}
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

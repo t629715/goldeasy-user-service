@@ -5,9 +5,7 @@ import com.goldeasy.common.exception.UserModuleException;
 import com.goldeasy.common.redis.RedisService;
 import com.goldeasy.common.util.DateTimeUtil;
 import com.goldeasy.common.util.MD5Util;
-import com.goldeasy.user.dto.UserBankCardDTO;
-import com.goldeasy.user.dto.UserLoginDTO;
-import com.goldeasy.user.dto.UserRegisterDTO;
+import com.goldeasy.user.dto.*;
 import com.goldeasy.user.entity.UserAccountInfo;
 import com.goldeasy.user.entity.UserGoldAccountInfo;
 import com.goldeasy.user.entity.UserInfo;
@@ -16,10 +14,7 @@ import com.goldeasy.user.mapper.*;
 import com.goldeasy.user.service.UserService;
 
 import com.goldeasy.user.util.JwtUtil;
-import com.goldeasy.user.vo.SysBankVO;
-import com.goldeasy.user.vo.UserInfoVO;
-import com.goldeasy.user.vo.UserNickNameVO;
-import com.goldeasy.user.vo.UserPersonalVO;
+import com.goldeasy.user.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -254,15 +249,24 @@ public class UserServiceImpl implements UserService {
         //获取积分余额
         BigDecimal markAmount = this.userMarkAccountInfoMapper.getMarkAmountById(userId);
         userInfoVO.setMarkAmount(markAmount);
+
         //获取已支付订单数量
-        Integer alreadyPaid = this.ygGoldOrderMapper.getOrderAmountByState(userId, new Short("1"));
-        userInfoVO.setAlreadyPaidAmount(alreadyPaid);
-        //获取待收货订单数量
-        Integer waitReceiveAmount = this.ygGoldOrderMapper.getOrderAmountByState(userId, new Short("2"));
-        userInfoVO.setWaitReceiveAmount(waitReceiveAmount);
-        //获取已完成订单数量
-        Integer completedAmount = this.ygGoldOrderMapper.getOrderAmountByState(userId, new Short("3"));
-        userInfoVO.setCompletedAmount(completedAmount);
+        OrderAmountDTO orderAmountDTO = this.ygGoldOrderMapper.getOrderAmount(userId);
+        if (orderAmountDTO == null){
+            userInfoVO.setAlreadyPaidAmount(0);
+            //获取待收货订单数量
+            userInfoVO.setWaitReceiveAmount(0);
+            //获取已完成订单数量
+            userInfoVO.setCompletedAmount(0);
+        }else {
+            userInfoVO.setAlreadyPaidAmount(orderAmountDTO.getAlreadyPaidAmount());
+            //获取待收货订单数量
+            userInfoVO.setWaitReceiveAmount(orderAmountDTO.getWaitReceiveAmount());
+            //获取已完成订单数量
+            userInfoVO.setCompletedAmount(orderAmountDTO.getCompletedAmount());
+        }
+
+
         //获取预约数量
         Integer preAmount = this.ygGoldRecoverOrderMapper.getRecoverGoldAmountByUserId(userId);
         userInfoVO.setPreAmount(preAmount);
@@ -356,6 +360,57 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * fetch 获取用户实名认证信息
+     * @author: tianliya
+     * @time: 2018/10/26
+     * @param userId
+     * @return
+     */
+    @Override
+    public UserRealNameAuthVO getUserRealNameInfo(Long userId) {
+        this.logger.info("获取用户实名认证信息业务层");
+        try{
+            UserRealNameAuthVO userRealNameAuthVO = this.userInfoMapper.getUserRealNameAuthInfo(userId);
+           return userRealNameAuthVO;
+        }catch (Exception e){
+            e.printStackTrace();
+            this.logger.error("获取用户实名认证信息业务层实现异常,用户id:{},异常信息:{}",userId,e.getMessage());
+            throw new UserModuleException("获取用户实名认证信息业务层");
+        }
+    }
+
+    /**
+     * fetch 用户申请实名认证
+     * @author: tianliya
+     * @time: 2018/10/26
+     * @param userRealNameDTO
+     * @param userId
+     * @return
+     */
+    @Override
+    public Boolean realNameAuth(UserRealNameDTO userRealNameDTO, Long userId) {
+        this.logger.info("用户申请实名认证业务层");
+        userRealNameDTO.setId(userId);
+        //设置身份证背面
+        userRealNameDTO.setIdCardBack("/back");
+        //设置身份证正面
+        userRealNameDTO.setIdCardPositive("/positive");
+        userRealNameDTO.setRealNameAuthState(new Short("2"));
+        userRealNameDTO.setRealNameAuthApplyTime(DateTimeUtil.toDate(LocalDateTime.now()));
+        try{
+            int flag = this.userInfoMapper.userRealNameAuth(userRealNameDTO);
+            if (flag > 0){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            this.logger.error("用户申请实名认证业务层实现异常,用户id:{},实名信息:{}异常信息:{}",userId,userRealNameDTO.toString(),e.getMessage());
+            throw new UserModuleException("用户申请实名认证业务层异常");
+        }
+    }
 
 
     /**
