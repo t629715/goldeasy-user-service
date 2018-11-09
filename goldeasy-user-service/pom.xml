@@ -59,6 +59,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--公共异常-->
+        <!--<dependency>
+            <groupId>com.goldeasy.common.exception</groupId>
+            <artifactId>goldeasy-common-exception</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>-->
         <!--实体类-->
         <dependency>
             <groupId>com.goldeasy.user</groupId>

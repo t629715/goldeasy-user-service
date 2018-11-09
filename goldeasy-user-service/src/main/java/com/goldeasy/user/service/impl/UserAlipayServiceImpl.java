@@ -1,6 +1,7 @@
 package com.goldeasy.user.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.goldeasy.common.exception.UserModuleException;
 import com.goldeasy.common.util.DateTimeUtil;
 import com.goldeasy.user.entity.UserAlipay;
 import com.goldeasy.user.mapper.UserAlipayMapper;
@@ -79,6 +80,13 @@ public class UserAlipayServiceImpl implements UserAlipayService {
         }
     }
 
+    /**
+     * fetch 修改用户绑定的支付宝
+     * @author: tianliya
+     * @time: 2018/11/9
+     * @param userAlipay
+     * @return
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean modifyUserAlipay(UserAlipay userAlipay) {

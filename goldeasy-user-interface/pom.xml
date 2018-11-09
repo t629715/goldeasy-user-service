@@ -24,6 +24,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.goldeasy.common.exception</groupId>
+			<artifactId>goldeasy-common-exception</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>com.goldeasy.user</groupId>
 			<artifactId>goldeasy-user-entity</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

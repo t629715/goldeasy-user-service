@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldeasy.user.mapper.UserAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.goldeasy.user.entity.UserAddress" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="address_province" property="addressProvince" jdbcType="VARCHAR" />
+    <result column="address_city" property="addressCity" jdbcType="VARCHAR" />
+    <result column="address_county" property="addressCounty" jdbcType="VARCHAR" />
+    <result column="address_info" property="addressInfo" jdbcType="VARCHAR" />
+    <result column="receive_address" property="receiveAddress" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="SMALLINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!--获取哦用户收货地址-->
+  <select id="listUserAddress" resultType="com.goldeasy.user.vo.UserAddressVO">
+    SELECT id, contact_name contactName, contact_phone contactPhone, address_province addressProvince, address_city addressCity,
+      address_county addressCounty,address_info addressInfo, receive_address receiveAddress, is_default isDefault
+    FROM user_address
+    WHERE user_id = #{userId,jdbcType=BIGINT}
+    ORDER BY gmt_create DESC
+  </select>
+
+  <!--获取用户的默认收货地址-->
+  <select id="selectDefaultAddress" resultMap="BaseResultMap">
+    SELECT id, contact_name , contact_phone , address_province , address_city ,
+      address_county ,address_info , receive_address , is_default
+    FROM user_address
+    WHERE user_id = #{userId,jdbcType=BIGINT} AND is_default = 1
+  </select>
+</mapper>
