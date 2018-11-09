@@ -1,11 +1,8 @@
 package com.goldeasy.user.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.goldeasy.common.exception.UserModuleException;
 import com.goldeasy.common.util.DateTimeUtil;
-import com.goldeasy.user.dto.UserBankCardDTO;
 import com.goldeasy.user.entity.UserAlipay;
-import com.goldeasy.user.mapper.SysBankMapper;
 import com.goldeasy.user.mapper.UserAlipayMapper;
 import com.goldeasy.user.mapper.UserBankCardMapper;
 import com.goldeasy.user.service.UserAlipayService;

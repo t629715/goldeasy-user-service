@@ -9,7 +9,8 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="user_login_action" property="userLoginAction" jdbcType="SMALLINT" />
     <result column="user_recharge_action" property="userRechargeAction" jdbcType="SMALLINT" />
-    <result column="user_delivery_action" property="userDeliveryAction" jdbcType="SMALLINT" />
+    <result column="user_trading_action" property="userTradingAction" jdbcType="SMALLINT" />
+    <result column="user_withdraw_action" property="userWithdrawAction" jdbcType="SMALLINT" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>

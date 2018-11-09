@@ -31,10 +31,16 @@ public class UserActionControl {
     private Short userRechargeAction;
 
     /**
-     * 交割行为-1：允许交割，2：不允许
+     * 金权交易行为-1：允许金权交易，2：不允许
      */
-    @Column(name = "user_delivery_action")
-    private Short userDeliveryAction;
+    @Column(name = "user_trading_action")
+    private Short userTradingAction;
+
+    /**
+     * 提现行为-1：允许提现，2：不允许
+     */
+    @Column(name = "user_withdraw_action")
+    private Short userWithdrawAction;
 
     /**
      * 创建时间
@@ -121,21 +127,39 @@ public class UserActionControl {
     }
 
     /**
-     * 获取交割行为-1：允许交割，2：不允许
+     * 获取金权交易行为-1：允许金权交易，2：不允许
      *
-     * @return user_delivery_action - 交割行为-1：允许交割，2：不允许
+     * @return user_trading_action - 金权交易行为-1：允许金权交易，2：不允许
      */
-    public Short getUserDeliveryAction() {
-        return userDeliveryAction;
+    public Short getUserTradingAction() {
+        return userTradingAction;
     }
 
     /**
-     * 设置交割行为-1：允许交割，2：不允许
+     * 设置金权交易行为-1：允许金权交易，2：不允许
      *
-     * @param userDeliveryAction 交割行为-1：允许交割，2：不允许
+     * @param userTradingAction 金权交易行为-1：允许金权交易，2：不允许
      */
-    public void setUserDeliveryAction(Short userDeliveryAction) {
-        this.userDeliveryAction = userDeliveryAction;
+    public void setUserTradingAction(Short userTradingAction) {
+        this.userTradingAction = userTradingAction;
+    }
+
+    /**
+     * 获取提现行为-1：允许提现，2：不允许
+     *
+     * @return user_withdraw_action - 提现行为-1：允许提现，2：不允许
+     */
+    public Short getUserWithdrawAction() {
+        return userWithdrawAction;
+    }
+
+    /**
+     * 设置提现行为-1：允许提现，2：不允许
+     *
+     * @param userWithdrawAction 提现行为-1：允许提现，2：不允许
+     */
+    public void setUserWithdrawAction(Short userWithdrawAction) {
+        this.userWithdrawAction = userWithdrawAction;
     }
 
     /**
