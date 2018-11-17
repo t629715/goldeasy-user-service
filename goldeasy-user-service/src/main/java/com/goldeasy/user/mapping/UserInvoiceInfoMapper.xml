@@ -14,4 +14,10 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
+  <select id="listUserInvoiceInfo" resultType="com.goldeasy.user.vo.UserInvoiceInfoVO">
+    SELECT id, invoice_title invoiceTitle,
+    FROM user_invoice_info
+    WHERE user_id = #{userId}
+    ORDER BY gmt_create DESC
+  </select>
 </mapper>
