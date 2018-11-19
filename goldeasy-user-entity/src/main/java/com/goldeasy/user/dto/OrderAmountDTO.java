@@ -3,7 +3,7 @@ package com.goldeasy.user.dto;
 import java.io.Serializable;
 
 /**
- * @author:考虑好可怜
+ * @author:
  * @date: 2018/10/24
  * @description: 订单数量传递类
  */
