@@ -14,6 +14,10 @@
 
   <!--根据id获取用户的积分-tianliya-->
   <select id="getMarkAmountById" resultType="java.math.BigDecimal" parameterType="java.lang.Long">
-    select mark_amount markAmount from user_mark_account_info where user_id = #{id,jdbcType=BIGINT}
+    select mark_amount markAmount from user_mark_account_info where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="lockForUpdate" parameterType="java.lang.Long" resultType="com.goldeasy.user.entity.UserMarkAccountInfo">
+    select id,user_id,mark_amount where user_id = #{userId,jdbcType=BIGINT} for update
   </select>
 </mapper>

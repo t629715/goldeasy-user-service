@@ -7,7 +7,7 @@
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="user_uame" property="userUame" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="side" property="side" jdbcType="SMALLINT" />
     <result column="mark" property="mark" jdbcType="DECIMAL" />
     <result column="pre_mark" property="preMark" jdbcType="DECIMAL" />
@@ -21,4 +21,8 @@
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <select id="listUserMarkRecord" parameterType="java.lang.Long" resultType="com.goldeasy.user.vo.UserMarkRecordVO">
+    select mark,alter_reason alterReason,DATE_FORMAT(gmt_create,'%Y-%m-%d %H:%i:%s') gmtCreate from user_mark_account_record where user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

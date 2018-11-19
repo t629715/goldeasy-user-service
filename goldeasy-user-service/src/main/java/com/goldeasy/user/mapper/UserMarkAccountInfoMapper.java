@@ -16,8 +16,16 @@ public interface UserMarkAccountInfoMapper extends BaseMapper<UserMarkAccountInf
      * fetch 根据id获取用户的积分
      * @author: tianliya
      * @time: 2018/10/23
-     * @param id
+     * @param userId
      * @return
      */
-    BigDecimal getMarkAmountById(Long id);
+    BigDecimal getMarkAmountById(Long userId);
+
+    /**
+     * fetch 修改前锁表-行级锁
+     * @time: 2018/11/19
+     * @param userId
+     * @return
+     */
+    UserMarkAccountInfo lockForUpdate(Long userId);
 }

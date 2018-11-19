@@ -22,8 +22,8 @@ public class UserMarkAccountRecord {
     /**
      * 用户名
      */
-    @Column(name = "user_uame")
-    private String userUame;
+    @Column(name = "user_name")
+    private String userName;
 
     /**
      * 进出方向 1：进 2：出
@@ -136,17 +136,17 @@ public class UserMarkAccountRecord {
      *
      * @return user_uame - 用户名
      */
-    public String getUserUame() {
-        return userUame;
+    public String getUserName() {
+        return userName;
     }
 
     /**
      * 设置用户名
      *
-     * @param userUame 用户名
+     * @param userName 用户名
      */
-    public void setUserUame(String userUame) {
-        this.userUame = userUame;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
