@@ -135,6 +135,30 @@ public class UserInfo {
     private String phoneAttributionProvince;
 
     /**
+     * 是否开启金权交易，0 不开启，1 开启
+     */
+    @Column(name = "is_open_gold_right")
+    private Boolean openGoldRightOrNot;
+
+    /**
+     * 金权交易是否实名认证，0 否，1 是
+     */
+    @Column(name = "is_check_real_name")
+    private Boolean checkRealNameOrNot;
+
+    /**
+     * 金权交易是否身份证号验证，0 否，1 是
+     */
+    @Column(name = "is_check_id_card")
+    private Boolean checkIdCardOrNot;
+
+    /**
+     * 金权交易第一次验证身份证号的时间
+     */
+    @Column(name = "first_check_id_card_time")
+    private Date firstCheckIdCardTime;
+
+    /**
      * 总经理id
      */
     @Column(name = "general_manager_id")
@@ -644,5 +668,37 @@ public class UserInfo {
      */
     public void setBrokerId(Long brokerId) {
         this.brokerId = brokerId;
+    }
+
+    public Boolean getOpenGoldRightOrNot() {
+        return openGoldRightOrNot;
+    }
+
+    public void setOpenGoldRightOrNot(Boolean openGoldRightOrNot) {
+        this.openGoldRightOrNot = openGoldRightOrNot;
+    }
+
+    public Boolean getCheckRealNameOrNot() {
+        return checkRealNameOrNot;
+    }
+
+    public void setCheckRealNameOrNot(Boolean checkRealNameOrNot) {
+        this.checkRealNameOrNot = checkRealNameOrNot;
+    }
+
+    public Boolean getCheckIdCardOrNot() {
+        return checkIdCardOrNot;
+    }
+
+    public void setCheckIdCardOrNot(Boolean checkIdCardOrNot) {
+        this.checkIdCardOrNot = checkIdCardOrNot;
+    }
+
+    public Date getFirstCheckIdCardTime() {
+        return firstCheckIdCardTime;
+    }
+
+    public void setFirstCheckIdCardTime(Date firstCheckIdCardTime) {
+        this.firstCheckIdCardTime = firstCheckIdCardTime;
     }
 }
